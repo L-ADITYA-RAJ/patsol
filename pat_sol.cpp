@@ -132,3 +132,228 @@ int main() {
     cout << revenue << endl;
     return 0;
 }
+
+
+
+
+
+-----------
+  
+Submit Code
+#include<iostream>#include<limits.h>#include<vector>using namespace std;int m[100][100];int s[100][100];int mcm(int p[],int i,int j){ if(m[i][j]!=0){ return m[i][j]; }
+
+if(i==j){ return 0; } m[i][j]=INT_MAX; for(int k=i;k<j;k++){ int h=min(m[i][j],mcm(p,i,k)+mcm(p,k+1,j)+p[i-1]*p[k]*p[j]); if(h<m[i][j]){ s[i-1][j-1]=k; m[i][j]=h; } } 
+return m[i][j];}int main(){ int n; cin>>n; int a[n]; for(int i=0;i<n;i++){ cin>>a[i]; } int c=mcm(a,1,n-1); for(int i=1;i<n-1;i++){ for(int j=i+1;j<n;j++){ cout<<m[i][j]<<" "; } cout<<endl; } for(int i=0;i<n-2;i++){ for(int j=i+1;j<n-1;j++){ cout<<s[i][j]<<" "; } cout<<endl; } cout<<c<<endl; }
+
+
+
+
+
+
+
+
+
+void printParenthesis(int i, int j, int n, string names[]) {
+    if (i == j) {
+        cout << names[i];
+        return;
+    }
+    cout << "(";
+    printParenthesis(i, s[i][j], n, names);
+    printParenthesis(s[i][j] + 1, j, n, names);
+    cout << ")";
+}
+
+void printParenthesis(int i, int j, int n, char &name){
+    if (i == j) {
+        cout << name++;
+        return;
+    }
+    cout << "(";
+    printParenthesis(i, s[i][j], n, name);
+    printParenthesis(s[i][j] + 1, j, n, name);
+    cout << ")";
+}
+
+
+#include<iostream>
+#include<limits.h>
+#include<vector>
+using namespace std;
+int m[100][100];
+int s[100][100];
+int mcm(int p[],int i,int j){
+    if(m[i][j]!=0){
+        return m[i][j];
+    }
+    if(i==j){
+        return 0;
+    }
+    m[i][j]=INT_MIN;
+    for(int k=i;k<j;k++){
+        int h=max(m[i][j],mcm(p,i,k)+mcm(p,k+1,j)+p[i-1]*p[k]*p[j]);
+        if(h>m[i][j]){
+            s[i-1][j-1]=k;
+            m[i][j]=h;
+        }
+    }
+    return m[i][j];
+}
+void printer(vector<vector<int>>s, int i, int j)
+{
+    if(i==j)
+        cout<<"A"<<i;
+    else
+    {
+        cout<<"(";
+        printer(s,i,s[i-1][j-1]);
+        printer(s,s[i-1][j-1]+1,j);
+        cout<<")";
+    }
+}
+int main(){
+    int n;
+    cin>>n;
+    int a[n];
+    for(int i=0;i<n;i++){
+        cin>>a[i];
+    }
+    int c=mcm(a,1,n-1);
+    for(int i=1;i<n-1;i++){
+        for(int j=i+1;j<n;j++){
+            cout<<m[i][j]<<" ";
+        }
+        cout<<endl;
+    }
+    vector<vector<int>>s1;
+    for(int i=0;i<n-1;i++){
+        vector<int>s2;
+        for(int j=0;j<n-1;j++){
+            s2.push_back(0);
+        }
+        s1.push_back(s2);
+    }
+    for(int i=0;i<n-2;i++){
+        vector<int>s2;
+        for(int j=i+1;j<n-1;j++){
+            cout<<s[i][j]<<" ";
+            s1[i][j]=s[i][j];
+        }
+        cout<<endl;
+    }
+    cout<<c<<endl;
+    // for(int i=0;i<n-1;i++){
+    //     for(int j=0;j<n-1;j++){
+    //         cout<<s1[i][j]<<" ";
+    //     }
+    //     cout<<endl;
+    // }
+    printer(s1,1,n-1);
+}
+
+
+
+
+
+
+
+
+#include<iostream>
+#include<limits.h>
+#include<vector>
+using namespace std;
+int m[100][100];
+int s[100][100];
+int mcm(int p[],int i,int j){
+    if(m[i][j]!=0){
+        return m[i][j];
+    }
+    if(i==j){
+        return 0;
+    }
+    m[i][j]=INT_MAX;
+    for(int k=i;k<j;k++){
+        int h=min(m[i][j],mcm(p,i,k)+mcm(p,k+1,j)+p[i-1]*p[k]*p[j]);
+        if(h<m[i][j]){
+            s[i-1][j-1]=k;
+            m[i][j]=h;
+        }
+    }
+    return m[i][j];
+}
+int main(){
+    int n;
+    cin>>n;
+    int a[n];
+    for(int i=0;i<n;i++){
+        cin>>a[i];
+    }
+    int c=mcm(a,1,n-1);
+    for(int i=1;i<n-1;i++){
+        for(int j=i+1;j<n;j++){
+            cout<<m[i][j]<<" ";
+        }
+        cout<<endl;
+    }
+    for(int i=0;i<n-2;i++){
+        for(int j=i+1;j<n-1;j++){
+            cout<<s[i][j]<<" ";
+        }
+        cout<<endl;
+    }
+    cout<<c<<endl;
+    
+}
+
+
+
+
+
+
+#include<iostream>
+#include<limits.h>
+#include<vector>
+using namespace std;
+int mcm(int p[],int i,int j){
+    if(i==j){
+        return 0;
+    }
+    int q=INT_MAX;
+    for(int k=i;k<j;k++){
+        q=min(q,mcm(p,i,k)+mcm(p,k+1,j)+p[i-1]*p[k]*p[j]);
+    }
+    return q;
+}
+int main(){
+    int n;
+    cin>>n;
+    int a[n];
+    for(int i=0;i<n;i++){
+        cin>>a[i];
+    }
+    int c=mcm(a,1,n-1);
+    cout<<c;
+}
+
+
+
+
+
+#include<iostream>
+using namespace std;
+int p_count(int n){
+    if(n<=1){
+        return 1;
+    }
+    int q=0;
+    for(int i=1;i<n;i++){
+        q=q+p_count(i)*p_count(n-i);
+    }
+    return q;
+}
+int main(){
+    int n;
+    cin>>n;
+    int a=p_count(n);
+    cout<<a;
+}
